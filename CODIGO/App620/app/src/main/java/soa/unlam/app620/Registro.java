@@ -6,6 +6,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +38,7 @@ public class Registro extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registro);
+        registerReceiver(NetworkStateReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         ///rescato la informacion de la interfaz grafica
         nombre = (EditText)findViewById(R.id.nombreRegistro);
         apellido = (EditText)findViewById(R.id.apellidoReigistro);
@@ -118,13 +121,31 @@ public class Registro extends AppCompatActivity {
                         startActivity(new Intent(Registro.this, MainActivity.class));
                     }
                 }
-                
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }
     };
+
+    private BroadcastReceiver NetworkStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            boolean estaConectado = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+            if (estaConectado){
+                Log.d("[DEBUG] NetConnection", "Network Up");
+                Toast.makeText(context.getApplicationContext(), "Conectado a Internet", Toast.LENGTH_LONG).show();
+            }
+            else{
+                Log.d("[DEBUG] NetConnection", "Network Down");
+                Toast.makeText(context.getApplicationContext(), "No hay conexion a internet", Toast.LENGTH_LONG).show();
+            }
+        }
+    };
+
     public boolean validaCampos() {
 
         boolean esValido = true;

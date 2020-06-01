@@ -26,7 +26,7 @@ public class SensorAcelerometro extends AppCompatActivity implements SensorEvent
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_acelerometro);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Button btn3 = (Button) findViewById(R.id.btnVolver);
@@ -55,6 +55,12 @@ public class SensorAcelerometro extends AppCompatActivity implements SensorEvent
         SensorManager sm = (SensorManager) getSystemService(SENSOR_SERVICE);
         sm.unregisterListener(this);
         super.onStop();
+    }
+
+    protected void onPause() {
+        SensorManager sm = (SensorManager) getSystemService(SENSOR_SERVICE);
+        sm.unregisterListener(this);
+        super.onPause();
     }
 
     @Override

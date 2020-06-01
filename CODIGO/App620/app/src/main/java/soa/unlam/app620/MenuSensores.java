@@ -34,5 +34,14 @@ public class MenuSensores extends AppCompatActivity {
             }
 
         });
+
+        Button btnLogOut = (Button) findViewById(R.id.btnLogOut);
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuSensores.this,Login.class);
+                startActivity(intent);
+            }
+        });
     }
 }

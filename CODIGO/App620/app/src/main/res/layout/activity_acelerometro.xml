@@ -19,7 +19,7 @@
 
     <TextView
         android:id="@+id/txtAccX"
-        android:layout_width="310dp"
+        android:layout_width="match_parent"
         android:layout_height="32dp"
         android:layout_margin="20dp"
         android:text="Valor de X"
@@ -28,7 +28,7 @@
 
     <TextView
         android:id="@+id/txtAccY"
-        android:layout_width="310dp"
+        android:layout_width="match_parent"
         android:layout_height="32dp"
         android:layout_margin="20dp"
         android:text="Valor de Y"
@@ -37,7 +37,7 @@
 
     <TextView
         android:id="@+id/txtAccZ"
-        android:layout_width="310dp"
+        android:layout_width="match_parent"
         android:layout_height="32dp"
         android:layout_margin="20dp"
         android:text="Valor de Z"
