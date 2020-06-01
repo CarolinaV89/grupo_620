@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnRegistrarMain:
                 intent=new Intent(MainActivity.this, Registro.class);
                 startActivity(intent);
-                default:
+                break;
+            default:
                 Toast.makeText(getApplicationContext(),"Error en Listener de botones",Toast.LENGTH_LONG).show();
         }
 
