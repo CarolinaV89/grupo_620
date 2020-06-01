@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SensorLuz">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:text="Sensor de LUZ"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="72dp" />
+
+    <TextView
+        android:id="@+id/lx"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="30dp"
+        android:gravity="fill|left"
+        android:text="lx"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/btnVolv"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="140dp"
+        android:text="Volver" />
+</LinearLayout>

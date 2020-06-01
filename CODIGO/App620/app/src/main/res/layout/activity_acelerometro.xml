@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="130dp"
+        android:text="Acelerometro"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="133dp"
+        tools:layout_editor_absoluteY="31dp" />
+
+    <TextView
+        android:id="@+id/txtAccX"
+        android:layout_width="310dp"
+        android:layout_height="32dp"
+        android:layout_margin="20dp"
+        android:text="Valor de X"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="102dp" />
+
+    <TextView
+        android:id="@+id/txtAccY"
+        android:layout_width="310dp"
+        android:layout_height="32dp"
+        android:layout_margin="20dp"
+        android:text="Valor de Y"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="145dp" />
+
+    <TextView
+        android:id="@+id/txtAccZ"
+        android:layout_width="310dp"
+        android:layout_height="32dp"
+        android:layout_margin="20dp"
+        android:text="Valor de Z"
+        tools:layout_editor_absoluteX="30dp"
+        tools:layout_editor_absoluteY="188dp" />
+
+    <Button
+        android:id="@+id/btnVolver"
+        android:layout_width="150dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="130dp"
+        android:text="Volver" />
+
+</LinearLayout>

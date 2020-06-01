@@ -104,18 +104,21 @@ public class Registro extends AppCompatActivity {
             try {
                 String datosJsonString = intent.getStringExtra("datosJson");
                 if (datosJsonString.equals("Error")) {
-                    Toast.makeText(context.getApplicationContext(), "El usuario ya existe!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context.getApplicationContext(), "Error de conexión o el usuario ya existe", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(Registro.this, MainActivity.class));
                 }else {
                     JSONObject JSONData = new JSONObject(datosJsonString);
-                    Log.i("[DEBUG] Main", "Datos recibidos:" + datosJsonString);
+                    Log.i("[DEBUG] Main", "Datos:" + datosJsonString);
                     Log.i("[DEBUG] Main", "Tengo: " + JSONData.get("state"));
                     if (JSONData.get("state").equals("success")) {
-                        Toast.makeText(context.getApplicationContext(), "Registro correcto!:", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context.getApplicationContext(), "Registro exitoso:", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(Registro.this, Login.class));
                     } else {
                         Toast.makeText(context.getApplicationContext(), "Error:" + JSONData.get("msg"), Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(Registro.this, MainActivity.class));
                     }
                 }
-                startActivity(new Intent(Registro.this, MainActivity.class));
+                
             } catch (JSONException e) {
                 e.printStackTrace();
             }
