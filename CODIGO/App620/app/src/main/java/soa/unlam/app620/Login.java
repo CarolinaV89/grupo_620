@@ -97,14 +97,14 @@ public class Login extends AppCompatActivity {
                 String datosJsonString = intent.getStringExtra("datosJson");
                 Log.i("[DEBUG] Login", "Json" + datosJsonString);
                 if (datosJsonString.equals("Error")) {
-                    Toast.makeText(context.getApplicationContext(), "Credenciales incorrectas", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context.getApplicationContext(), "Credenciales incorrectas.", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(Login.this, MainActivity.class));
                 }else{
                     JSONObject JSONData = new JSONObject(datosJsonString);
                     Log.i("[DEBUG] Main", "Datos:" + datosJsonString);
                     Log.i("[DEBUG] Main", "Estado: " + JSONData.get("state"));
                     if (JSONData.get("state").equals("success")) {
-                        Toast.makeText(context.getApplicationContext(), "Login exitoso:", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context.getApplicationContext(), "Login exitoso.", Toast.LENGTH_LONG).show();
                         TOKEN= (String) JSONData.get("token");
                         startActivity(new Intent(Login.this, MenuSensores.class));
                     } else {

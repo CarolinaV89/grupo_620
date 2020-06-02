@@ -43,8 +43,12 @@ public class ServicesHttp extends IntentService {
 
     private void connectionHandler(String uri, JSONObject datosJson, String type) {
         String result;
-        result = post(uri, datosJson);
-
+        if(type.equals("event")){
+           result = postEvent (uri, datosJson);
+        }
+        else {
+            result = post(uri, datosJson);
+        }
         Log.i("[DEBUG] HTTP Post", "type " + type);
         switch (type){
             case "login":
@@ -57,6 +61,10 @@ public class ServicesHttp extends IntentService {
                 r.putExtra("datosJson", result);
                 sendBroadcast(r);
                 break;
+            case "event":
+                Intent e =new Intent("intent.action.Event");
+                e.putExtra("datosJson",result);
+                sendBroadcast(e);
             default:
                 Log.i("[DEBUG] HTTP Post", "Tipo invalido");
 
@@ -64,8 +72,6 @@ public class ServicesHttp extends IntentService {
         }
 
     }
-
-
 
     private String post(String uri, JSONObject datosJson) {
         HttpURLConnection conexionHttp=null;
@@ -94,7 +100,7 @@ public class ServicesHttp extends IntentService {
                 result = streamReader(new InputStreamReader(conexionHttp.getInputStream()));
             }else {
                 result = streamReader(new InputStreamReader(conexionHttp.getInputStream()));
-                Log.e("[ERROR] Salio esto:", "Connection Error:"+result);
+                Log.e("[ERROR] Mensaje:", "Connection Error:"+result);
                 result = "Error";
             }
 
@@ -106,6 +112,46 @@ public class ServicesHttp extends IntentService {
         return result;
     }
 
+
+    private String postEvent(String uri, JSONObject datosJson) {
+        HttpURLConnection conexionHttp=null;
+        String result="";
+
+        try {
+            URL mUrl=new URL(uri);
+            conexionHttp = (HttpURLConnection) mUrl.openConnection();
+            conexionHttp.addRequestProperty("token",Login.TOKEN);
+            conexionHttp.setRequestProperty("Content-Type","application/json; charset=UTF-8");
+            conexionHttp.setDoOutput(true);
+            conexionHttp.setDoInput(true);
+            conexionHttp.setConnectTimeout(5000);
+            conexionHttp.setRequestMethod("POST");
+            DataOutputStream wr =new DataOutputStream(conexionHttp.getOutputStream());
+            wr.write(datosJson.toString().getBytes("UTF-8"));
+            Log.i("[DEBUG] HTTP Post", "Datos"+datosJson.toString() + "uri: "+uri);
+            wr.flush();
+            wr.close();
+
+            conexionHttp.connect();
+            int responseCode= conexionHttp.getResponseCode();
+            Log.i("[DEBUG] HTTP Post","Server response: "+ conexionHttp.getResponseMessage());
+            Log.i("[DEBUG] HTTP Post","Return code: "+ responseCode);
+            if((responseCode == conexionHttp.HTTP_OK) || (responseCode == conexionHttp.HTTP_CREATED)) {
+                Log.i("[DEBUG] HTTP Post","Connection OK"+ conexionHttp.toString());
+                result = streamReader(new InputStreamReader(conexionHttp.getInputStream()));
+            }else {
+                result = streamReader(new InputStreamReader(conexionHttp.getInputStream()));
+                Log.e("[ERROR] Mensaje:", "Connection Error:"+result);
+                result = "Error";
+            }
+
+            conexionHttp.disconnect();
+
+        }catch (Exception e) {
+            return "Error";
+        }
+        return result;
+    }
 
     private String streamReader(InputStreamReader input) throws IOException {
         BufferedReader streamReader = new BufferedReader(input);
