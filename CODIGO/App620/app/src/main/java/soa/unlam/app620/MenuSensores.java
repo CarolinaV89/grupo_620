@@ -39,7 +39,7 @@ public class MenuSensores extends AppCompatActivity {
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MenuSensores.this,Login.class);
+                Intent intent = new Intent(MenuSensores.this,MainActivity.class);
                 startActivity(intent);
             }
         });

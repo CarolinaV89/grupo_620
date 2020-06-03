@@ -1,7 +1,6 @@
 package soa.unlam.app620;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,11 +15,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // Referencias a los objetos en el xml
         btnLogin=(Button)findViewById(R.id.btnLoginMain);
         btnRegistrar=(Button)findViewById(R.id.btnRegistrarMain);
-
         // Event Listeners
         btnLogin.setOnClickListener(this);
         btnRegistrar.setOnClickListener(this);
@@ -34,11 +31,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnLoginMain:
                 //se genera un Intent para poder lanzar la activity principal
                 intent=new Intent(MainActivity.this, Login.class);
-
                 //Se le agrega al intent los parametros que se le quieren pasar a la activyt principal
                 //cuando se lanzado
                 //intent.putExtra("textoOrigen",txtOrigen.getText().toString());
-
                 //se inicia la activity principal
                 startActivity(intent);
                 break;

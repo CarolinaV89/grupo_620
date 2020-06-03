@@ -24,20 +24,19 @@ public class Login extends AppCompatActivity {
     private Button btnLogin;
     public static String TOKEN = "";
     public IntentFilter filtro;
-
     private static final String URI_LOGIN = "http://so-unlam.net.ar/api/api/login";
-    //private static final String URI_REGISTER_USER= "http://so-unlam.net.ar/api/api/register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //Registro el network receiver para detectar si hay conexion de internet
         registerReceiver(NetworkStateReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         ///rescato la informacion de la interfaz grafica
         email = (EditText)findViewById(R.id.emailLogin);
         password = (EditText)findViewById(R.id.pwdLogin);
         btnLogin = (Button)findViewById(R.id.btnLoginLogin);
-
+        //configuro el onClickListener del boton de Login
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -52,41 +51,31 @@ public class Login extends AppCompatActivity {
                         obj.put("password", password.getText().toString());
                         obj.put("commission", 03);
                         obj.put("group", 620);
-
                         //se asocia el intent al servicio
-
                         Intent i = new Intent(Login.this, ServicesHttp.class); ///ver min 31:10
                         //se agrega el parametro uri
                         i.putExtra("uri", URI_LOGIN);
                         i.putExtra("datosJson", obj.toString());
                         i.putExtra("type", "login");
                         startService(i);
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
                 }
             }
         });
-
+//Configuro el broadcast Receiver para recibir la respuesta de la solicitud http
         configurarBroadcastReceiver();
-
     }
 
-
-
-    //METODO QUE CREA Y CONFIGURA UN BROADCAST RECEIVER PARA COMUNICAR AL SERVICIO QUE RECIBE LOS MENSAJES DEL SERVICIO
-    // CON LA ACTIVITY PRINCIPAL
+//METODO QUE CREA Y CONFIGURA UN BROADCAST RECEIVER PARA COMUNICAR AL SERVICIO QUE RECIBE LOS MENSAJES DEL SERVICIO
+// CON LA ACTIVITY PRINCIPAL
 
     private void configurarBroadcastReceiver() {
         //SE ASOCIA (REGISTRA) LA ACCION RESPUESTA_OPERACION, PARA QUE CUANDO EL SERVICIO DE RECEPCION LA EJECUTE
         //SE INVOQUE AUTOMATICAMENTE AL ONRECEIVE DEL OBJETO RECEIVER
         filtro = new IntentFilter("intent.action.Login");
-
         filtro.addCategory("Intent.category.LAUNCHER");
-
         registerReceiver(receiver, filtro);
     }
 
@@ -118,7 +107,7 @@ public class Login extends AppCompatActivity {
             }
         }
     };
-
+//Configuracion del Receiver para detectar cambios en el estado de la conexion de internet
     private BroadcastReceiver NetworkStateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -135,7 +124,7 @@ public class Login extends AppCompatActivity {
             }
         }
     };
-
+//Validacion de campos del formulario de login
     public boolean validaCampos() {
         boolean esValido = true;
         String mail = email.getText().toString();
@@ -155,6 +144,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         unregisterReceiver(receiver);
+        unregisterReceiver(NetworkStateReceiver);
         super.onDestroy();
     }
 

@@ -51,4 +51,9 @@
         android:layout_marginStart="130dp"
         android:text="Volver" />
 
+    <ListView
+        android:id="@+id/listAccel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </LinearLayout>

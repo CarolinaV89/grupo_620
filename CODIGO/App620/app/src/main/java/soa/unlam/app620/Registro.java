@@ -27,13 +27,9 @@ public class Registro extends AppCompatActivity {
     private EditText comision;
     private EditText grupo;
     private Button btnRegistrar;
-
     public IntentFilter filtro;
-    //private Registro.ReceptorOperation receiver = new Registro.ReceptorOperation(); ///ver para que es
-
     //private static final String URI_LOGIN = "http://so-unlam.net.ar/api/api/login";
     private static final String URI_REGISTER_USER= "http://so-unlam.net.ar/api/api/register";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +43,8 @@ public class Registro extends AppCompatActivity {
         password = (EditText)findViewById(R.id.claveRegistro);
         comision = (EditText)findViewById(R.id.comisionRegistro);
         grupo = (EditText)findViewById(R.id.grupoRegistro);
-       // resultado = (EditText)findViewById(R.id.resultado);
         btnRegistrar = (Button)findViewById(R.id.btnRegistro);
-
+//configuro el on click listener para el boton de registro
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,40 +59,31 @@ public class Registro extends AppCompatActivity {
                         obj.put("password", password.getText().toString());
                         obj.put("commission", Integer.parseInt(comision.getText().toString()));
                         obj.put("group", Integer.parseInt(grupo.getText().toString()));
-
                         //se asocia el intent al servicio
-
                         Intent i = new Intent(Registro.this, ServicesHttp.class); ///ver min 31:10
                         //se agrega el parametro uri
                         i.putExtra("uri", URI_REGISTER_USER);
                         i.putExtra("datosJson", obj.toString());
                         i.putExtra("type", "registrar");
                         startService(i);
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             }
         });
-
         configurarBroadcastReceiver();
-
     }
 
 
 
     //METODO QUE CREA Y CONFIGURA UN BROADCAST RECEIVER PARA COMUNICAR AL SERVICIO QUE RECIBE LOS MENSAJES DEL SERVICIO
     // CON LA ACTIVITY PRINCIPAL
-
     private void configurarBroadcastReceiver() {
         //SE ASOCIA (REGISTRA) LA ACCION RESPUESTA_OPERACION, PARA QUE CUANDO EL SERVICIO DE RECEPCION LA EJECUTE
         //SE INVOQUE AUTOMATICAMENTE AL ONRECEIVE DEL OBJETO RECEIVER
         filtro = new IntentFilter("intent.action.Registro");
-
         filtro.addCategory("Intent.category.LAUNCHER");
-
         registerReceiver(receiver, filtro);
     }
 
@@ -121,14 +107,13 @@ public class Registro extends AppCompatActivity {
                         startActivity(new Intent(Registro.this, MainActivity.class));
                     }
                 }
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
     };
 
+    //Network Receiver para detectar estado de la conexion a internet
     private BroadcastReceiver NetworkStateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -146,8 +131,8 @@ public class Registro extends AppCompatActivity {
         }
     };
 
+    //validacion de campos del formulario de registro
     public boolean validaCampos() {
-
         boolean esValido = true;
         String auxEmail = email.getText().toString();
         String auxPwd = password.getText().toString();
@@ -156,37 +141,33 @@ public class Registro extends AppCompatActivity {
         String auxNombre = nombre.getText().toString();
         String auxApellido = apellido.getText().toString();
         String auxDni = dni.getText().toString();
-
         if(auxNombre.isEmpty()){
-            nombre.setError("Nombre invalido");
+            nombre.setError("Ingrese Nombre");
             esValido = false;
         }
         if(auxApellido.isEmpty()){
-            apellido.setError("Apellido invalido");
+            apellido.setError("Ingrese Apellido");
             esValido = false;
         }
-
         if(auxDni.isEmpty() || auxDni.length()>8){
             dni.setError("DNI invalido");
             esValido = false;
         }
-
         if(auxEmail.isEmpty() || !auxEmail.contains("@")){
-            email.setError("Email invalido");
+            email.setError("Ingrese un email valido");
             esValido = false;
         }
         if(auxPwd.isEmpty() || auxPwd.length()<8){
-            password.setError("Password invalida");
+            password.setError("La password debe tener al menos 8 caracteres");
             esValido = false;
         }
-
         if(auxComision.isEmpty()){
-            comision.setError("Comision invalida");
+            comision.setError("Ingrese Comision");
             esValido = false;
         }
 
         if(auxGrupo.isEmpty()){
-            grupo.setError("Grupo invalido");
+            grupo.setError("Ingrese Grupo");
             esValido = false;
         }
         return esValido;

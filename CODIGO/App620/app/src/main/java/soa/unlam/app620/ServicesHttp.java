@@ -43,7 +43,7 @@ public class ServicesHttp extends IntentService {
 
     private void connectionHandler(String uri, JSONObject datosJson, String type) {
         String result;
-        if(type.equals("event")){
+        if(type.equals("event") || type.equals("eventAccel")){
            result = postEvent (uri, datosJson);
         }
         else {
@@ -65,6 +65,12 @@ public class ServicesHttp extends IntentService {
                 Intent e =new Intent("intent.action.Event");
                 e.putExtra("datosJson",result);
                 sendBroadcast(e);
+                break;
+            case "eventAccel":
+                Intent eA =new Intent("intent.action.EventAccel");
+                eA.putExtra("datosJson",result);
+                sendBroadcast(eA);
+                break;
             default:
                 Log.i("[DEBUG] HTTP Post", "Tipo invalido");
 
